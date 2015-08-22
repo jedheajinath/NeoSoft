@@ -1,0 +1,93 @@
+<div class="oldcomment" style="margin-left:0px;">
+<% object.get_comment.each do |comment_message| %>
+
+  <div class=" bg-info" id="commnet<%=comment_message.id%>" style="padding:0px;margin-bottom:5px;"> 
+          <span class="text-primary"> <%= comment_message.message %> </span>  &nbsp;&nbsp;&nbsp;
+         <%#=  time_ago_in_words(comment_message.created_at) %>
+          <%= comment_message.get_uname %>
+
+         <div class="clearfix"></div>
+
+         <div class="editcomment" id="editcomment<%=comment_message.id%>" style="display:none">
+              <%= render :partial=> "site/edit_comment" , :locals => {:comment => comment_message} %>
+         </div>
+
+         <div class="childcomment" id="childcomment<%=comment_message.id%>" style="display:none">
+              <%= render :partial=> "site/subcomment" , :locals => {:comment => comment_message} %>
+         </div>
+
+         <% if comment_message.user_id == current_user.id %>
+                  <a class="commentdml" data-remote="true" id="editcommentlink<%=comment_message.id%>"><i class="fa fa-pencil-square-o"></i></a>
+                  <a class="commentdml" data-remote="true" id="deletecommentlink<%=comment_message.id%>" data-method="delete" href="site/delete_comment?id=<%=comment_message.id%>"><i class="fa fa-trash-o"></i></a>
+          <% end %>
+                 <a class="commentdml" data-remote="true" id="childcommentlink<%=comment_message.id%>" href="#"><i class="fa fa-comment"></i>
+                 <span class="badge"><%= comment_message.parent.count %></span></a>
+  </div>
+              <script type="text/javascript">
+                $(document).ready(function(){
+                  $("#deletecommentlink<%=comment_message.id%>").click(function(){
+                      $("#commnet<%=comment_message.id%>").hide();
+                     });
+                  
+                 });
+            </script>
+<% end %>
+</div>
+    
+
+<%= form_for (object.comments.build) do |f| %>
+          <div class="field">
+            <%= f.text_area :message, placeholder: "Provide comment here.", cols: 40, rows: 1%>
+            <%= f.hidden_field :post_id, :value => object.id %>
+            <%= f.hidden_field :user_id, :value => current_user.id %>
+            <%= f.hidden_field :parent_id, :value => nil %>
+          </div>
+          <div class="actions" id="comment<%=object.id%>">
+            <%= f.submit "Leave Comment" %>
+             &nbsp;&nbsp;<%= link_to "back", :back %>
+          </div>
+<% end %>
+
+
+
+
+
+
+<script type="text/javascript">
+  $(document).ready(function(){
+       $("#commentpostlink<%=object.id%>").click(function(){
+           $("#commentpost<%=object.id%>").css("display","block");
+           $(".dml<%=object.id%>").hide();
+       });
+  });
+</script>
+
+  
+<!--
+ <script type="text/javascript">
+//   $(document).ready(function(){
+//     $('#comment<%=object.id %>').click(function(){
+//        var msg=$("#comment_message").val();
+//        var pid="<%=object.id%>";
+//        var uid="<%=current_user.id%>"
+//        $.ajax({
+//          data: { message: msg, post_id: pid ,user_id: uid },
+//          type: 'get',
+//          dataType: 'json',
+//          url: 'site/comment',
+//        success: function(resp,status,three) {
+//              // alert("hello" +resp.status);
+//              //location.reload();
+//          } ,
+//        error: function(resp,type,error){
+//          // alert("error");
+//          }
+//        }); // end of ajax
+//     }); // end of hi
+//   }); // end of doc ready
+// </script>
+-->
+  
+
+
+

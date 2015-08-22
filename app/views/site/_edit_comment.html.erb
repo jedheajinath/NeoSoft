@@ -1,0 +1,26 @@
+
+<%= form_for(comment) do |f| %>
+    <div class="field">
+    <%= f.text_area :message , cols: 40, rows: 1 %>
+  </div>
+      <%= f.hidden_field :post_id %>
+
+       <%= f.hidden_field :user_id %>
+        <%= f.hidden_field :parent_id %>
+  
+  <div class="actions">
+    <%= f.submit %>
+    &nbsp;&nbsp;<%= link_to "back", :back %>
+  </div>
+<% end %>
+
+<script type="text/javascript">
+   $(document).ready(function(){
+   $("#editcommentlink<%=comment.id%>").click(function(){
+        $("#editcomment<%=comment.id%>").css("display","block");
+        $("#new_comment").hide();
+        $(".commentdml").hide();
+        
+      });
+   });
+</script>

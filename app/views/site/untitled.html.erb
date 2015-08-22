@@ -1,0 +1,61 @@
+<style type="text/css">
+  .pad5{padding-left: 5px;}
+  .post{ background:antiquewhite; padding-left: 10px;padding-top: 5px; padding-bottom: 5px;
+    margin-bottom: 5px;}
+  .post h4 {color:blue;}
+  .post a{padding-left: 25px;padding-right: 25px;}
+</style>
+
+
+
+
+<%= render "site/new_post" %>
+
+<div class="wrapper">
+    <% @posts.each do |post| %>     
+     <div class="post" id= "post<%=post.id%>">
+         <h4  class=""> <%= post.content %> </h4>
+         <span class=""> <%=  time_ago_in_words(post.created_at) %> </span>
+         <p class=""> <%= post.get_uname %> </p>
+         <% if post.user_id == current_user.id %>
+            <a class="dml<%=post.id%>" data-remote="true" id="editpostlink<%=post.id%>"><i class="fa fa-pencil-square-o"></i></a>
+            <a class="dml<%=post.id%>" data-remote="true" id="deletepost<%=post.id%>"><i class="fa fa-trash-o"></i></a>
+             
+          <% end %>
+           <a class="dml<%=post.id%>" data-remote="true" id="commentpostlink<%=post.id%>" href="#"><i class="fa fa-comment"></i><span class="badge"><%= post.comments.count %></span></a> 
+          <script type="text/javascript">
+              $(document).ready(function(){
+                $("#deletepost<%=post.id%>").click(function(event){
+                   event.preventDefault();
+                   var pid="<%=post.id%>"
+                   $('#post<%=post.id%>').remove();
+                   $.ajax({
+                     data: { id: pid },
+                     type: 'post',
+                     dataType: 'json',
+                     url: 'site/delete_post',
+                   success: function(resp,status,three) {
+                      // alert(resp.status);
+                     } ,
+                   error: function(resp,type,error){
+                       alert("error" + error);
+                     }
+                   }); // end of ajax
+                }); // end of hi
+              }); // end of doc ready
+        </script>
+         
+        <div class="editpost" style="display:none" id="editpost<%=post.id%>">
+           <%#= render :partial=> "site/edit_post" , :locals => {:post => post} %>
+        </div>
+
+        <div class="commentpost" style="display:none" id="commentpost<%=post.id%>">
+           <%#= render :partial=> "site/comment" , :locals => {:object => post} %>
+        </div>
+
+
+     </div> 
+    <% end %>
+</div>
+
+

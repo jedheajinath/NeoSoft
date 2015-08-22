@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>TwitterApp</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+
+<nav class="navbar" style="background:#ffcc99">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">WebSiteName</a>
+    </div>
+    <div>
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Home</a></li>
+       <!--  <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Page 1 <span class="caret"></span></a> -->
+         <!--  <ul class="dropdown-menu">
+            <li><a href="#">Notification</a></li>
+            <li><a href="#">Message</a></li>
+            <li><a href="#">Page 1-3</a></li>
+          </ul> -->
+        
+        <li><a href="#">Notification</a></li>
+        <li><a href="#">Message</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+      	<li>
+    <% if user_signed_in? %>
+			<%= link_to 'Logout', destroy_user_session_path, :class => "" ,:method => :delete %>
+			<%else%>
+			<%= link_to 'Login', user_session_path, :class => ""  %>
+			<% end %>
+		</li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+
+<div class="container">
+ <div class="row">
+   <div class="col-md-3"> <h3> Welcome </h3> <strong> <%= current_user.email %> </strong></div>
+   <div class="col-md-6"> <%= yield %> </div>
+   <div class="col-md-3">  </div>
+ </div>
+</div>
+
+<DIV class="clearfix"> </DIV>
+
+</body>
+</html>

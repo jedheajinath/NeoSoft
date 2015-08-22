@@ -1,0 +1,177 @@
+<%= render "site/new_post" %>
+<div class="wrapper">
+  <div class="allpost" style="padding-left:10px">
+      <% @posts.each do |post| %>
+      <div class="eachpost" id="eachpost<%=post.id%>" style="background:antiquewhite;padding-top:15px;">
+        <h4  class="text-primary"> <%= post.content %> </h4>
+        <span class="" style="color:cadetblue"> 
+        <%=  time_ago_in_words(post.updated_at) %> </span>
+        <p class=""> <%= post.get_uname %> </p>
+       <!-- eachpost --> 
+      <div class="dml" style="box-shadow: 0px 1px 1px 0px #888888;padding:2px">
+        <% if post.user_id == current_user.id %>
+            <a class="dml<%=post.id%>" data-remote="true" id="editpostlink<%=post.id%>"><i class="fa fa-pencil-square-o"></i></a>
+            <a class="dml<%=post.id%>" id="deletepost<%=post.id%>" data-remote="true" ><i class="fa fa-trash-o"></i></a>     
+        <% end %>
+           <a class="dml<%=post.id%>" data-remote="true" id="commentpostlink<%=post.id%>" href="#"><i class="fa fa-comment"></i><span class="badge"><%= post.comments.count %></span></a> 
+      </div>
+      <div class="comment">
+      <% def ihash(comments) %>
+					<% comments.each_pair do |k,v| %>
+					 <% if v.is_a?(Hash) %>
+					  
+           <DIV id="parent<%=k.id%>" class="">
+						  <div id="parentcomments<%=k.id%>" class="commentpad childcomment<%=k.parent_id%>" style="background:bisque;">
+						     <h5 class="text-primary"> <%= k.message %> </h5>
+						     <span style="color:cadetblue">
+                 <%=  time_ago_in_words(k.updated_at) %></span>
+	            
+						    <div class="dml">
+						      <% if k.user_id == current_user.id %>
+						          <a class="dml<%=k.id%>" data-remote="true" id="editlink<%=k.id%>"><i class="fa fa-pencil-square-o"></i></a>
+
+						          <a class="dml<%=k.id%>" data-remote="true" id="deletelink<%=k.id%>"><i class="fa fa-trash-o"></i></a>    
+
+						      <% end %>
+						           <a class="dml<%=k.id%>" data-remote="true" id="commentlink<%=k.id%>" href="#"><i class="fa fa-comment"></i><span class="badge"><%= k.children.count %></span></a>
+						     </div>
+            </div> 
+						
+
+					  <div class="editcomment" id="editcomment<%=k.id%>" style="display:none">
+                      <%= render :partial=> "site/edit_comment" , :locals => {:comment => k} %>
+					  </div> 
+
+            <div class="childcomment commentpartial<%=k.id%>" id="commentpartial<%=k.root.id%>" style="display:none">
+                      <%= render :partial=> "site/subcomment" , :locals => {:comment => k } %>
+            </div>
+					 
+            
+            
+              <script type="text/javascript">
+                  $(document).ready(function(){
+                     $("#parentcomments<%=k.id%>").hide();
+                     $(".childcomment").addClass("");
+                     $("#commentpostlink<%=k.post_id%>").click(function(){
+                     $("#parentcomments<%=k.id%>").slideToggle(100);
+                   });
+
+                   $("#editlink<%=k.id%>").click(function(){
+                    $("#editcomment<%=k.id%>").toggle();
+                    $("#editcomment<%=k.id%>").css({
+                          "background": "rgb(255, 228, 196)",
+                          "padding": "10px"
+                    });
+                   });
+
+                   $("#commentlink<%=k.id%>").click(function(){
+                    $(".commentpartial<%=k.id%>").toggle();
+                    $(".commentpartial<%=k.id%>").css({
+                          "background": "rgb(255, 228, 196)",
+                          "padding": "10px"
+                    });
+                   });
+
+
+
+                  $("#deletelink<%=k.id%>").click(function(event){
+                   event.preventDefault();
+                   var cid="<%=k.id%>"
+                   $.ajax({
+                     data: { id: cid },
+                     type: 'delete',
+                     dataType: 'json',
+                     url: 'site/delete_comment',
+                   success: function(resp,status,three) {
+                       $("#parentcomments<%=k.id%>").hide();
+                       location.reload();
+                     } ,
+                   error: function(resp,type,error){
+                       alert("error" + error);
+                     }
+                   }); // end of ajax
+                  }); // end of hi
+                });
+              </script>
+            <% if k.children.present? %>
+               <script type="text/javascript">
+               $(document).ready(function(){
+                    $("#commentlink<%=k.id%>").click(function(){
+                              $(".childcomment<%=k.id%>").slideToggle(100);
+                              $(".childcomment<%=k.id%>").css({
+                                 background: "lightblue"
+                              });
+                    });
+                 });
+            </script> 
+            <% end %>
+
+
+					      <% ihash(v) %>
+					   <%  else %>
+					     <%= k.message  %>         
+					    <% end %>
+					<% end %>
+			<% end %>
+
+      <% post.get_comment.each do |comment| %>
+            <% commenthash=Comment.find(comment.id) %>
+						<% ihash(commenthash.hash_tree)  %> 	
+      <% end %>
+
+      <div class="childcomment" id="parentcommentpartial<%=post.id%>" style="display:none">
+                      <%= render :partial=> "site/subcomment" , :locals => {:comment => post } %>
+      </div>
+
+      <div class="editpost" style="display:none" id="editpostpartial<%=post.id%>">
+           <%= render :partial=> "site/edit_post" , :locals => {:post => post} %>
+      </div>
+
+      <script type="text/javascript">
+        $(document).ready(function(){
+         $("#eachpost<%=post.id%>").css({
+          "margin-top":"10px",
+          });
+         $("#commentpostlink<%=post.id%>").click(function(){
+              $("#parentcommentpartial<%=post.id%>").css({
+                "background":"rgb(239, 220, 202)",
+                "padding": "10px"
+                });
+              $("#parentcommentpartial<%=post.id%>").toggle();
+            });
+
+           $("#editpostlink<%=post.id%>").click(function(){
+              $("#editpostpartial<%=post.id%>").css({
+                "background":"rgb(239, 220, 202)",
+                "padding": "10px"
+                });
+              $("#editpostpartial<%=post.id%>").toggle();
+            });
+
+           $("#deletepost<%=post.id%>").click(function(event){
+                   event.preventDefault();
+                   var pid="<%=post.id%>"
+                   $('#post<%=post.id%>').remove();
+                   $.ajax({
+                     data: { id: pid },
+                     type: 'post',
+                     dataType: 'json',
+                     url: 'site/delete_post',
+                   success: function(resp,status,three) {
+                       $("#eachpost<%=post.id%>").hide();
+                     } ,
+                   error: function(resp,type,error){
+                       alert("error" + error);
+                     }
+                   }); // end of ajax
+                }); // end of hi
+
+         });
+       </script>
+
+      </div>
+      <% end %> 
+       
+  </div> <!-- all post-->
+
+</div> <!--Wrapper -->
