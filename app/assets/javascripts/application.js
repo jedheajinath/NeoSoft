@@ -13,5 +13,5 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
-//= require_tree .
-//= require js/bootstrap.min.js
+//= require_tree ../../../vendor/assets/javascripts/
+//= require bootstrap.min.js

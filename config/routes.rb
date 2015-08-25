@@ -1,17 +1,20 @@
 Rails.application.routes.draw do
   # resources :comments
 
-  post "site/create_post" => "site#create_post" 
-  post "site/delete_post" => "site#delete_post"
-  delete "site/delete_comment" => "site#delete_comment" 
+  # post "site/create_post" => "site#create_post" 
+  # post "site/delete_post" => "site#delete_post"
+  # delete "site/delete_comment" => "site#delete_comment" 
   
-  devise_for :users
-  resources :posts,only: [:create,:update,:destroy]
-  resources :comments ,only: [:create,:update,:destroy]
   get "/home" => "site#home"
-  #get "site/comment" => "site#comment" 
- 
+
+  get "/comments/ancestors/:id" => "comments#ancestors"
+  get "/comments/new/:id" => "comments#new"
+
+  resources :posts, only:[:create,:update,:destroy,:edit]
+  resources :comments, only:[:create,:update,:destroy,:edit,:new]
+  devise_for :users 
   root 'site#index'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

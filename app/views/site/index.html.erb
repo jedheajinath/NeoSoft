@@ -2,15 +2,12 @@
   <div class="jumbotron">
     <h1>Welcome To Twitter</h1>      
          
-     <% if user_signed_in? %>
+    <% if user_signed_in? %>
 			<%= link_to 'Logout', destroy_user_session_path, :class => "btn btn-danger btn-sm" ,:method => :delete %>
 			<%else%>Please Login to Continue.... 
 			<%= link_to 'Login', user_session_path, :class => "btn btn-info btn-sm"  %>
 			<% end %>
-	 <%#= link_to 'Sign Up', new_user_session_path, :class => "btn btn-info btn-sm" %>
-      
-    </p>
-  </div>
+	</div>
 </div>
 
 

@@ -1,0 +1,26 @@
+
+
+
+<p id="notice"><%= notice %></p>
+<div class="allcomments">
+  <% @comments.each do |comment| %>
+    <div class="eachcommentwrapper" id="eachcommentwrapper<%=comment.id%>" style="margin-bottom: 5px; background:#C6C9CC; padding:10px">
+      <div class="eachcomment">
+        <h5 class="text-info"><%= comment.message %></h5>
+         <%= comment.user.email if comment.user.email.present?  %>
+      </div>
+      <div class="edc_link">
+      <% if comment.user == current_user %>
+        <%= link_to edit_url, edit_comment_path(comment), remote: true %>
+        <%= link_to delete_url, comment,remote: true, method: :delete, data: { confirm: 'Are you sure?' } %>
+      <% end %>
+        <%= link_to comment_url(comment.parent.count),ancestors_url(comment) %>
+      </div> 
+      <div id="editcomment<%=comment.id%>"></div>  
+     </div>
+  <% end %>
+</div>
+
+
+
+
