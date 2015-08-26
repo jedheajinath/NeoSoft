@@ -1,26 +1,22 @@
-
-
-
 <p id="notice"><%= notice %></p>
 <div class="allcomments">
   <% @comments.each do |comment| %>
-    <div class="eachcommentwrapper" id="eachcommentwrapper<%=comment.id%>" style="margin-bottom: 5px; background:#C6C9CC; padding:10px">
-      <div class="eachcomment">
-        <h5 class="text-info"><%= comment.message %></h5>
-         <%= comment.user.email if comment.user.email.present?  %>
-      </div>
-      <div class="edc_link">
-      <% if comment.user == current_user %>
-        <%= link_to edit_url, edit_comment_path(comment), remote: true %>
-        <%= link_to delete_url, comment,remote: true, method: :delete, data: { confirm: 'Are you sure?' } %>
-      <% end %>
-        <%= link_to comment_url(comment.parent.count),ancestors_url(comment) %>
-      </div> 
-      <div id="editcomment<%=comment.id%>"></div>  
-     </div>
+    <% comment.ancestors.each_pair do |k,v| %>
+        <div class="eachcommentwrapper" id="eachcommentwrapper<%=v.id%>" style="margin-bottom: 5px; background:#C6C9CC; padding:10px">
+        <div class="eachcomment">
+          <h5 class="text-info"><%= v.message %></h5>
+        </div>
+        <div class="edc_link">
+        <% if v.user == current_user %>
+          <%= link_to edit_url, edit_comment_path(v), remote: true %>
+          <%= link_to delete_url, v,remote: true, method: :delete, data: { confirm: 'Are you sure?' } %>
+        <% end %>
+          <%= link_to comment_url(v.parents.count),ancestors_url(v),remote: :true %>
+        </div> 
+        <div class="editcomment<%=v.id%>"></div>
+        <div id="childcomment<%=v.id%>"></div>
+       </div>
+     <%end %>
+     <% $hash={} %>
   <% end %>
 </div>
-
-
-
-

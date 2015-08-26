@@ -5,29 +5,33 @@ class CommentsController < ApplicationController
     if params[:id].present? 
       @post=Post.find(params[:id])
       @comment=@post.comments.build
-      @comments=@post.comments.all
+      @comments=@post.comments
     end
   end
 
   def create
     @comment = Comment.create(comment_params)
-    @comments = @comment.post.comments
+    @comments = @comment.get_root_comment.comments
   end
 
   def update
-    @comment = Comment.find(params[:id])
+    # @comment = Comment.find(params[:id])
     @comment.update_attributes(comment_params)
-    @comments = @comment.post.comments
+    @comments = @comment.get_root_comment.comments
+
+
   end
 
   def destroy
     @comment.destroy
-    @comments = @comment.post.comments
+    @comments = @comment.get_root_comment.comments
   end
 
   def ancestors
-    @comment=Comment.find(params[:id])
-    @ancestors=@comment.ancestors
+    comment=Comment.find(params[:id])
+    @comment=comment.parents.build
+    @comments = @comment.get_root_comment.comments
+
   end
 
   private

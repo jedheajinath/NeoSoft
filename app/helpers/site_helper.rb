@@ -16,6 +16,6 @@ module SiteHelper
   end
 
   def new_comment_url(comment)
-  	"/comments/new/#{comment.id}"
+  	"/comments/new/#{comment}"
   end
 end

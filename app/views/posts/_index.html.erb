@@ -11,7 +11,7 @@
         <%= link_to edit_url, edit_post_path(post), remote: true %>  
         <%= link_to delete_url, post,remote: true, method: :delete, data: { confirm: 'Are you sure?' } %>
         <% end %>
-        <%= link_to comment_url(post.comments.count), new_comment_url(post) ,remote: true %>
+        <%= link_to comment_url(post.comments.count), new_comment_url(post.id) ,remote: true %>
       </div> 
 
       <div id="editpost<%=post.id%>"></div> <!-- Edit record div -->

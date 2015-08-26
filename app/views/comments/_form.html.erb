@@ -16,6 +16,7 @@
   </div>
     <%= f.hidden_field :post_id %>
     <%= f.hidden_field :user_id  ,:value => current_user.id %>
+     <%= f.hidden_field :parent_id  %>
   
   <div class="actions">
     <%= f.submit %>  &nbsp;&nbsp;&nbsp;<%= link_to 'Back', :back %>

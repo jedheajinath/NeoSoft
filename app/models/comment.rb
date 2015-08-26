@@ -2,17 +2,37 @@ class Comment < ActiveRecord::Base
   belongs_to :post
   belongs_to :user
   belongs_to :parent, :class_name => 'Comment', :foreign_key => 'parent_id'
-  has_many :parent, :class_name => 'Comment', :foreign_key => 'parent_id',  :dependent => :destroy 
+  has_many :parents, :class_name => 'Comment', :foreign_key => 'parent_id',  :dependent => :destroy 
   
-  def ancestors(hash={})
-    self.parent.each do |child|
-      puts child.message
-      hash[child.id] = child
-      if child.parent.present?
+  $hash={}
+  def ancestors
+    $hash[self.id]=self
+    self.parents.each do |child|
+      $hash[child.id] = child
+      if child.parents.present?
         child.ancestors
       end
     end
-    return hash
+    return $hash
   end
+
+  def get_root_comment
+    if self.parent.present?
+      self.parent.get_root_comment
+    else
+      return self.post
+    end
+  end
+
+  def get_comment_email
+    self.user.email
+  end
+
+  #  def get_root_comment
+  #     #self.parent.present? self.parent.get_root_comment : self
+  #     self.parent.get_root_comment unless self.parent.present? 
+  # end
+
+
   
 end
