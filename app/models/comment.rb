@@ -3,8 +3,17 @@ class Comment < ActiveRecord::Base
   belongs_to :user
   belongs_to :parent, :class_name => 'Comment', :foreign_key => 'parent_id'
   has_many :parents, :class_name => 'Comment', :foreign_key => 'parent_id',  :dependent => :destroy 
-  
+
+  #scope :parentcomment, ->{ where(parent_id: nil , id: get_id) }
+  #scope :parent_comment, lambda { |value| where('parent_id = (?)', value) if value }
+
+
   $hash={}
+
+  def get_id
+    return self.id
+  end
+
   def ancestors
     $hash[self.id]=self
     self.parents.each do |child|
@@ -24,15 +33,4 @@ class Comment < ActiveRecord::Base
     end
   end
 
-  def get_comment_email
-    self.user.email
-  end
-
-  #  def get_root_comment
-  #     #self.parent.present? self.parent.get_root_comment : self
-  #     self.parent.get_root_comment unless self.parent.present? 
-  # end
-
-
-  
 end

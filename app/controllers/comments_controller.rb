@@ -1,4 +1,5 @@
 class CommentsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_comment, only: [:edit, :update, :destroy]
   
   def new
@@ -15,11 +16,8 @@ class CommentsController < ApplicationController
   end
 
   def update
-    # @comment = Comment.find(params[:id])
     @comment.update_attributes(comment_params)
     @comments = @comment.get_root_comment.comments
-
-
   end
 
   def destroy
@@ -31,7 +29,6 @@ class CommentsController < ApplicationController
     comment=Comment.find(params[:id])
     @comment=comment.parents.build
     @comments = @comment.get_root_comment.comments
-
   end
 
   private
