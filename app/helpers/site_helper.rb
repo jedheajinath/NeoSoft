@@ -1,4 +1,5 @@
 module SiteHelper
+
   def edit_url
     raw("<i class='fa fa-pencil-square-o'></i>")
   end
@@ -18,4 +19,5 @@ module SiteHelper
   def new_comment_url(comment)
   	"/comments/new/#{comment}"
   end
+  
 end

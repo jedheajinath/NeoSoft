@@ -21,13 +21,15 @@
               <% if user_signed_in? %>
     			      <%= link_to 'Logout', destroy_user_session_path, :class => "" ,:method => :delete %>
     			    <% else %>
-    			      <%= link_to 'Login', destroy_user_session_path, :class => "" ,:method => :delete %>
+    			      <%= link_to 'Login', user_session_path, :class => ""  %>
     			    <% end %>
     		    </li>
           </ul>
         </div>
       </div>
     </nav>
+
     <%= yield %>
+    
   </body>
 </html>

@@ -1,0 +1,15 @@
+<div class="col-md-push-3 follwing_list">
+  <h4 class="text-primary"> Following User  </h4>
+	
+  <% @users.each do |user| %>
+	  <div class="col-md-3" id="follwing_list<%=user.id%>">
+		  <%= image_tag user.image.url if user.image.present? %><br>
+		  <%= user.email %> <br>
+		  <%#= link_to "Unfollow" , "#" , :method => :delete, :remote => :true %>
+      <%= link_to "Unollow", user.followings.first, remote: :true, method: :delete, class: :"btn-sm btn-danger" %>
+    </div>
+	<% end %>
+
+</div> 
+
+

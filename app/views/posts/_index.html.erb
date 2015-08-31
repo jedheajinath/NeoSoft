@@ -1,10 +1,12 @@
 <div class="allposts">
   <% @posts.each do |post| %>
-    <div class="eachpostwrapper" style="margin-bottom: 5px; background:lightblue; padding:10px">
+    
+    <div class="eachpostwrapper" style="margin-bottom: 5px; background:lightblue; padding:10px">  
       <div class="eachpost">  
         <h4 class="text-danger"> <%= post.content %></h4>
         <%= post.user.email %> 
       </div>
+
       <div class="edc_link">
         <% if post.user==current_user %>  
         <%= link_to edit_url, edit_post_path(post), remote: true %>  
@@ -14,9 +16,12 @@
       </div> 
 
       <div id="editpost<%=post.id%>"></div> <!-- Edit record div -->
+
       <div id="newcomment<%=post.id%>"></div>
     </div>
+
     <div class="clearfix"></div>
+  
   <% end %>
 </div>
 

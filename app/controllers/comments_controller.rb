@@ -26,15 +26,17 @@ class CommentsController < ApplicationController
   end
 
   def ancestors
-    comment=Comment.find(params[:id])
-    @comment=comment.parents.build
+    comment = Comment.find(params[:id])
+    @comment = comment.parents.build
     @comments = @comment.get_root_comment.comments
   end
 
   private
+
     def set_comment
       @comment = Comment.find(params[:id])
     end
+    
     def comment_params
       params.require(:comment).permit(:message, :post_id, :user_id, :parent_id)
     end

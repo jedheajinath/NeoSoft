@@ -1,22 +1,25 @@
 <%= form_for(@comment , remote: true) do |f| %>
   <% if @comment.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@comment.errors.count, "error") %> prohibited this comment from being saved:</h2>
-
+      <h2>
+        <%= pluralize(@comment.errors.count, "error") %> 
+        prohibited this comment from being saved:
+      </h2>
       <ul>
-      <% @comment.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
+        <% @comment.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
       </ul>
     </div>
   <% end %>
 
   <div class="field">
-    <%= f.text_area :message , :placeholder => "Provide Comment Here" %>
+    <%= f.text_area :message, placeholder: "Provide Comment Here" %>
   </div>
-    <%= f.hidden_field :post_id %>
-    <%= f.hidden_field :user_id  ,:value => current_user.id %>
-     <%= f.hidden_field :parent_id  %>
+  
+  <%= f.hidden_field :post_id %>
+  <%= f.hidden_field :user_id, value: current_user.id %>
+  <%= f.hidden_field :parent_id  %>
   
   <div class="actions">
     <%= f.submit %>  &nbsp;&nbsp;&nbsp;<%= link_to 'Back', :back %>

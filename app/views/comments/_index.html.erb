@@ -1,10 +1,10 @@
 <p id="notice"><%= notice %></p>
+
 <div class="allcomments">
   <% @comments.each do |comment| %>
     <% comment.ancestors.each_pair do |k,v| %>
-      
-      <div class="eachcommentwrapper" id="eachcommentwrapper<%=v.id%>" style="margin-bottom: 5px; background:#C6C9CC; padding:5px;" >
-        
+
+      <div class="eachcommentwrapper" id="eachcommentwrapper<%=v.id%>" style="margin-bottom: 5px; background:#C6C9CC; padding:5px;" >        
         <div class="eachcomment">
           <h5 class="text-info"><%= v.message %></h5>
         </div>
@@ -20,7 +20,7 @@
         <div class="editcomment<%=v.id%>"></div>
         
         <div id="childcomment<%=v.id%>"></div>
-       
+        
       </div>
       
       <% if v.parent_id.nil?  %>

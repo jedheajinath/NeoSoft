@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  #get 'relationships/index'
+
   # resources :comments
 
   # post "site/create_post" => "site#create_post" 
@@ -6,13 +8,14 @@ Rails.application.routes.draw do
   # delete "site/delete_comment" => "site#delete_comment" 
   
   get "/home" => "site#home"
-
   get "/comments/ancestors/:id" => "comments#ancestors"
   get "/comments/new/:id" => "comments#new"
+  get "/relationships/followers" => "relationships/followers" 
 
-  resources :posts, only:[:create,:update,:destroy,:edit]
-  resources :comments, only:[:create,:update,:destroy,:edit,:new]
-  devise_for :users 
+  resources :posts , only: [:create , :update , :destroy , :edit]
+  resources :comments , only: [:create , :update , :destroy , :edit , :new]
+  resources :relationships , only: [:create , :update , :destroy]
+  devise_for :users, :controllers => { registrations: 'registrations' }
   root 'site#index'
 
   # The priority is based upon order of creation: first created -> highest priority.

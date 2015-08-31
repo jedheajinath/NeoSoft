@@ -1,0 +1,23 @@
+<div class="follwing_list">
+	<h4 class="text-primary text-center"> Follow User </h4>
+	<% @users.each do |user| %>
+		
+		<div class="follwing<%=user.id%>">
+			<p class = "text-center">
+			  <%= image_tag user.image.url if user.image.present? %>
+			</p>
+			<%= user.email %> <br>
+			<%= link_to "Follow",
+			{
+			  controller:  :relationships, 
+			  action:  "create",
+			  user_id:  user.id ,
+			  follower_id:  current_user.id,
+			  following_id:  user.followings.build.following_id
+			}, 
+			remote: :true, method: :post, class: "btn-sm btn-info", style:  "margin-left: 60px"  %>
+	  </div>
+
+    <hr>
+	<% end %>
+</div> 

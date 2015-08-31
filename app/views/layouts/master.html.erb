@@ -7,27 +7,22 @@
     <%= csrf_meta_tags %>
   </head>
   <body>
-    <nav class="navbar" style="background:#ffcc99">
-      <div class="container-fluid">
-        
+    <nav class="navbar" style="background:#D3E5EA">
+      <div class="container-fluid"> 
         <div class="navbar-header">
           <a class="navbar-brand" href="#">WebSiteName</a>
         </div>
 
         <div>
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
+            <li class="active"><a href="<%= home_path %>">Home</a></li>
             <li><a href="#">Notification</a></li>
             <li><a href="#">Message</a></li>
+            
           </ul>
           <ul class="nav navbar-nav navbar-right">
-          	<li>
-              <% if user_signed_in? %>
-        			<%= link_to 'Logout', destroy_user_session_path, :class => "" ,:method => :delete %>
-        			<% else %>
-        			<%= link_to 'Login', user_session_path, :class => ""  %>
-        			<% end %>
-    		    </li>
+          	<li><%= link_to "edit profile",edit_user_registration_path %> </li>
+            <li><%= link_to 'Logout', destroy_user_session_path, :class => "" ,:method => :delete %></li>
           </ul>
         </div>
 
@@ -36,14 +31,24 @@
     
     <div class="container">
       <div class="row">
-        <div class="col-md-3"> <h3> Welcome </h3> <strong> <%= current_user.email %> </strong></div>
-        <div class="col-md-6"> 
+
+        <div class="col-md-2"> 
+          <h3 class="text-primary"> Welcome </h3> <strong class="text-info"> <%= current_user.email %> </strong>
+            <div width=200 height=100>
+              <%= image_tag current_user.image.url.to_s if current_user.image.present? %><hr>
+              <!-- <li><%#= link_to user_stat("Posts",current_user.posts.count), "#" %></li> <hr> -->
+              <li><%= link_to user_stat("Following",current_user.followers.count), relationships_followers_path %></li><hr>
+              <li><%= link_to  user_stat("Follower",current_user.followings.count) , "#" %></li><hr>
+            </div>
+        </div>
+
+        <div class="col-md-9"> 
          <p id="notice"><%= notice %></p>
           <%= yield %>
         </div>
-        <div class="col-md-3">  </div>
-     </div>
+
+      </div>
     </div>
 
-</body>
+  </body>
 </html>

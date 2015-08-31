@@ -1,7 +1,14 @@
-<div class="createpost">
-   <%= render "posts/form" %>
+<div class="col-md-9">
+
+  <div class="createpost">
+		<%= render "posts/form" %>
+	</div>
+  <div class="allpost">
+		<%= render "posts/index" %>
+	</div>
+
 </div>
 
-<div class="allpost">
-   <%= render "posts/index" %>
+<div class="col-md-3 col-md-push-1">  
+  <%= render "relationships/index" %>
 </div>
