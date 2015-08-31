@@ -2,7 +2,7 @@ class Comment < ActiveRecord::Base
   belongs_to :post
   belongs_to :user
   belongs_to :parent, class_name: :Comment, foreign_key: :parent_id
-  has_many :parents, class_name: :Comment, foreign_key: :parent_id, :dependent => :destroy 
+  has_many :parents, class_name: :Comment, foreign_key: :parent_id, dependent: :destroy 
 
   #scope :parentcomment, ->{ where(parent_id: nil , id: get_id) }
   #scope :parent_comment, lambda { |value| where('parent_id = (?)', value) if value }

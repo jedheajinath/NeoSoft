@@ -4,9 +4,9 @@ class CommentsController < ApplicationController
   
   def new
     if params[:id].present? 
-      @post=Post.find(params[:id])
-      @comment=@post.comments.build
-      @comments=@post.comments
+      @post = Post.find(params[:id])
+      @comment = @post.comments.build
+      @comments = @post.comments
     end
   end
 
