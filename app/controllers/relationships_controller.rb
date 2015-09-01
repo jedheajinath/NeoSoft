@@ -4,15 +4,19 @@ class RelationshipsController < ApplicationController
   def create
     @relationship = Relationship.create(relationship_param)
     @users = User.follower_list(current_user)-User.following_list(current_user)
+    @posts = User.get_all_posts(current_user)
   end
 
   def destroy
     @relationship.destroy
-    #@users = User.following_list(current_user)
   end
   
-  def followers
+  def following
     @users = User.following_list(current_user)
+  end
+
+  def follower
+    @users = User.followed_list(current_user)
   end
 
   private

@@ -6,7 +6,7 @@
 			<p class = "text-center">
 			  <%= image_tag user.image.url if user.image.present? %>
 			</p>
-			<%= user.email %> <br>
+			<span style="margin-left:15%"> <%= user.email %> </span><br>
 			<%= link_to "Follow",
 			{
 			  controller:  :relationships, 

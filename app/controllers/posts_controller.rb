@@ -4,17 +4,17 @@ class PostsController < ApplicationController
 
   def destroy
     @post.destroy
-    @posts = Post.all
+   @posts = User.get_all_posts(current_user)
   end
 
   def create
     @post = Post.create(post_params)
-    @posts = Post.all
+    @posts = User.get_all_posts(current_user)
   end
 
   def update
     @post.update_attributes(post_params)
-    @posts = Post.all
+    @posts = User.get_all_posts(current_user)
   end
 
   private  

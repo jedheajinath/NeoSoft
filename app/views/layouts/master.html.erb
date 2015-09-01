@@ -37,8 +37,8 @@
             <div width=200 height=100>
               <%= image_tag current_user.image.url.to_s if current_user.image.present? %><hr>
               <!-- <li><%#= link_to user_stat("Posts",current_user.posts.count), "#" %></li> <hr> -->
-              <li><%= link_to user_stat("Following",current_user.followers.count), relationships_followers_path %></li><hr>
-              <li><%= link_to  user_stat("Follower",current_user.followings.count) , "#" %></li><hr>
+              <li><%= link_to user_stat("Following",current_user.followers.count),  relationships_following_path, id: "following_count" %></li><hr>
+              <li><%= link_to  user_stat("Follower",current_user.followings.count), relationships_follower_path, id: "follower_count"%></li><hr>
             </div>
         </div>
 
@@ -47,8 +47,14 @@
           <%= yield %>
         </div>
 
+        <div class="clearfix"></div>
+
+
+
+
       </div>
     </div>
+    <div class="footer"> Copyright &copy; 2015- All Rights Reserved - ajinathjedhe99@gmail.com </div>
 
   </body>
 </html>

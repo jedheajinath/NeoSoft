@@ -1,17 +1,20 @@
 <div class="allposts">
   <% @posts.each do |post| %>
     
-    <div class="eachpostwrapper" style="margin-bottom: 5px; background:lightblue; padding:10px">  
+    <div class="eachpostwrapper" style="margin-bottom: 5px; background:lightblue; padding:10px"> 
+
       <div class="eachpost">  
         <h4 class="text-danger"> <%= post.content %></h4>
         <%= post.user.email %> 
       </div>
 
       <div class="edc_link">
+
         <% if post.user==current_user %>  
-        <%= link_to edit_url, edit_post_path(post), remote: true %>  
-        <%= link_to delete_url, post,remote: true, method: :delete, data: { confirm: 'Are you sure?' } %>
+          <%= link_to edit_url, edit_post_path(post), remote: true %>  
+          <%= link_to delete_url, post,remote: true, method: :delete, data: { confirm: 'Are you sure?' } %>
         <% end %>
+        
         <%= link_to comment_url(post.comments.count), new_comment_url(post.id) ,remote: true %>
       </div> 
 

@@ -9,7 +9,7 @@ class SiteController < ApplicationController
 
   def home
     @post = Post.new
-    @posts = Post.all
+    @posts = User.get_all_posts(current_user)
     @users = User.follower_list(current_user)-User.following_list(current_user)
   end   
 

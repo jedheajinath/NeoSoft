@@ -10,7 +10,8 @@ Rails.application.routes.draw do
   get "/home" => "site#home"
   get "/comments/ancestors/:id" => "comments#ancestors"
   get "/comments/new/:id" => "comments#new"
-  get "/relationships/followers" => "relationships/followers" 
+  get "/relationships/following" => "relationships/following"
+  get "/relationships/follower" => "relationships/follower" 
 
   resources :posts , only: [:create , :update , :destroy , :edit]
   resources :comments , only: [:create , :update , :destroy , :edit , :new]

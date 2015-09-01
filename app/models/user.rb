@@ -24,4 +24,17 @@ class User < ActiveRecord::Base
     return array
   end
 
+  def self.followed_list(current_user)
+      array=[]
+      current_user.followings.each do |f| array +=[f.follower] end
+      return array
+  end
+  def self.get_all_posts(current_user)
+    post=[]
+    current_user.followers.each do |f|
+      post += f.following.posts
+    end 
+    return post += current_user.posts
+  end
+
 end

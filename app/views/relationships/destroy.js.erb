@@ -1,2 +1,1 @@
-<%#= render "save" %>
-$("#follwing_list<%=@relationship.follower%>").hide();
+$("#following_count span").text("<%=current_user.followers.count%>");
