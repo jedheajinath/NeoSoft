@@ -3,8 +3,8 @@ class RelationshipsController < ApplicationController
 
   def create
     @relationship = Relationship.create(relationship_param)
-    @users = User.follower_list(current_user)-User.following_list(current_user)
-    @posts = User.get_all_posts(current_user)
+    @users = User.follower_list(current_user)-current_user.following_list
+    @posts = current_user.get_all_posts.paginate(page: params[:page], per_page: 3)
   end
 
   def destroy
@@ -12,11 +12,11 @@ class RelationshipsController < ApplicationController
   end
   
   def following
-    @users = User.following_list(current_user)
+    @users = current_user.following_list
   end
 
   def follower
-    @users = User.followed_list(current_user)
+    @users = current_user.followed_list
   end
 
   private

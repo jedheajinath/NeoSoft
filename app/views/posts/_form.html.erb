@@ -1,18 +1,6 @@
 <%= form_for(@post, remote: true) do |f| %>
-
-  <% if @post.errors.any? %>
-    <div id="error_explanation">
-      <h2>
-        <%= pluralize(@post.errors.count, "error") %> prohibited this post from being saved:
-      </h2>
-      <ul>
-        <% @post.errors.full_messages.each do |message| %>
-        <li> <%= message %> </li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
+  
+  <%= @post.errors.full_messages.first if @post.errors.any? %>
   <div class="field">
       <%= f.text_area :content,cols: 60, rows: 3, id: "post_content"  %>
       <%= f.hidden_field :user_id, value: current_user.id %>
@@ -21,4 +9,5 @@
   <div class="actions text-center ">
     <%= f.submit class: "btn btn-primary" %> 
   </div>
+
 <% end %>

@@ -2,19 +2,19 @@ class PostsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_post, only: [:edit,:update,:destroy]
 
-  def destroy
-    @post.destroy
-   @posts = User.get_all_posts(current_user)
-  end
-
   def create
     @post = Post.create(post_params)
-    @posts = User.get_all_posts(current_user)
+    @posts = current_user.get_all_posts.paginate(page: params[:page], per_page: 3)
   end
 
   def update
     @post.update_attributes(post_params)
-    @posts = User.get_all_posts(current_user)
+    @posts = current_user.get_all_posts.paginate(page: params[:page], per_page: 3)
+  end
+
+  def destroy
+    @post.destroy
+    @posts = current_user.get_all_posts.paginate(page: params[:page], per_page: 3)
   end
 
   private  

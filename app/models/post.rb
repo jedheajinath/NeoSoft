@@ -1,6 +1,6 @@
 class Post < ActiveRecord::Base
-    belongs_to :user
-    has_many :comments, dependent:  :destroy
-
-    #scope :all_posts, lambda { |value| where('id = (?)', value) if value }
+  belongs_to :user
+  has_many :comments, dependent:  :destroy
+    
+  validates :content, presence: true
 end
