@@ -10,6 +10,11 @@
     foreign_key: :follower_id, dependent:  :destroy
   has_many :followings, class_name: :Relationship, source: :following,
     foreign_key: :following_id, dependent:  :destroy
+  #
+  has_one :profile, dependent:  :destroy
+
+  # has_many :assets, dependent: :destroy
+  # accepts_nested_attributes_for :assets, allow_destroy: :true
 
   mount_uploader :image, ImageUploader
   scope :follower_list, proc {|value| where.not('id = (?)', value) if value }
@@ -30,9 +35,9 @@
     post = []
     self.followers.each do |f|
       post += f.following.posts
-    end 
+    end
     post += self.posts
-    return post.reverse
+    return post.sort_by {|post| post[:created_at] }.reverse
   end
 
 end

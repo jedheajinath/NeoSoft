@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :profiles
   #get 'relationships/index'
 
   # resources :comments

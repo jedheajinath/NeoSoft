@@ -1,6 +1,7 @@
 <%= form_for(@comment , remote: true) do |f| %>
+  
+  <div id="commentterror"> </div>
 
-  <%= @comment.errors.full_messages.first if @comment.errors.any? %>
   <div class="field">
     <%= f.text_area :message, placeholder: "Provide Comment Here" %>
   </div>
@@ -12,4 +13,5 @@
   <div class="actions">
     <%= f.submit %>  &nbsp;&nbsp;&nbsp;<%= link_to 'Back', :back %>
   </div>
+  
 <% end %>

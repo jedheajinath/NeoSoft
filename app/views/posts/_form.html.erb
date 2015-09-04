@@ -1,6 +1,6 @@
+
 <%= form_for(@post, remote: true) do |f| %>
-  
-  <%= @post.errors.full_messages.first if @post.errors.any? %>
+  <div id="posterror"> </div>
   <div class="field">
       <%= f.text_area :content,cols: 60, rows: 3, id: "post_content"  %>
       <%= f.hidden_field :user_id, value: current_user.id %>

@@ -3,8 +3,10 @@ class PostsController < ApplicationController
   before_action :set_post, only: [:edit,:update,:destroy]
 
   def create
-    @post = Post.create(post_params)
-    @posts = current_user.get_all_posts.paginate(page: params[:page], per_page: 3)
+    @post = Post.new(post_params)
+    @post.save
+    @posts = current_user.get_all_posts.paginate(page: params[:page], per_page: 3) 
+    
   end
 
   def update

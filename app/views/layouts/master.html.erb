@@ -12,13 +12,12 @@
         <div class="navbar-header">
           <a class="navbar-brand" href="#">WebSiteName</a>
         </div>
-
         <div>
           <ul class="nav navbar-nav">
             <li class="active"><a href="<%= home_path %>">Home</a></li>
             <li><a href="#">Notification</a></li>
             <li><a href="#">Message</a></li>
-            
+            <li><a href="<%= new_profile_path %>">Profile</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
           	<li><%= link_to "edit profile",edit_user_registration_path %> </li>
@@ -29,13 +28,13 @@
       </div>
     </nav>
     
-    <div class="container">
+    <div class="container well">
       <div class="row">
 
         <div class="col-md-2"> 
           <h3 class="text-primary"> Welcome </h3> <strong class="text-info"> <%= current_user.email %> </strong>
-            <div width=200 height=100>
-              <%= image_tag current_user.image.url.to_s if current_user.image.present? %><hr>
+            <div>
+              <%= image_tag current_user.image.url if current_user.image.present? %><hr>
               <!-- <li><%#= link_to user_stat("Posts",current_user.posts.count), "#" %></li> <hr> -->
               <li><%= link_to user_stat("Following",current_user.followers.count),  relationships_following_path, id: "following_count" %></li><hr>
               <li><%= link_to  user_stat("Follower",current_user.followings.count), relationships_follower_path, id: "follower_count"%></li><hr>

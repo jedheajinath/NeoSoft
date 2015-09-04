@@ -1,1 +1,4 @@
 <%= render "save" %>
+<% if @comment.errors.any? %>
+  $("#commentterror").html("comment can not empty .. ").css({"color":"red","text-align": "left"});
+<% end %>

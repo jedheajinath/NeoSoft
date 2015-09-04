@@ -1,1 +1,4 @@
 <%= render "save" %>
+<% if @post.errors.any? %>
+  $("#posterror").html("Post can not empty .. ").css({"color":"red","text-align": "center"});
+<% end %>

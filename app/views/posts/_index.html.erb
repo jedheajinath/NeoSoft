@@ -4,8 +4,9 @@
     <div class="eachpostwrapper" style="margin-bottom: 5px; background:lightblue; padding:10px"> 
 
       <div class="eachpost">  
-        <h4 class="text-danger"> <%= post.content %></h4>
-        <%= post.user.email %> 
+        <div class="text-danger"><h4><%= post.content %></div>
+        <div><small> <%= post.user.email %></small> </div>
+        <strong><small><%= time_ago_in_words(post.created_at) %></small></strong>
       </div>
 
       <div class="edc_link">

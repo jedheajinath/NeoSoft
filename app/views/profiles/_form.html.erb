@@ -1,0 +1,36 @@
+<%= form_for(@profile) do |f| %>
+  <% if @profile.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@profile.errors.count, "error") %> prohibited this profile from being saved:</h2>
+
+      <ul>
+      <% @profile.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  
+  <div class="field">
+    <%= f.label :contact %><br>
+    <%= f.text_field :contact %>
+  </div>
+
+  <%= f.hidden_field :user_id ,:value => current_user.id %>
+  
+  <%= f.fields_for :profile_assets do |p| %>
+     <div class="field">
+       <%= p.label :image_name %><br>
+       <%= p.file_field :image_name, multiple: :true, name: "profile_assets[image_name][]" %>
+     </div>
+   <% end %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
