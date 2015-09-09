@@ -1,5 +1,6 @@
 <p id="notice"><%= notice %></p>
 
+
 <p>
   <strong>Name:</strong>
   <%= @profile.name %>
@@ -11,11 +12,18 @@
 </p>
 
 <% @profile.assets.each do |image| %>
-  <div class="col-md-3">
-   <%= image_tag image.image_name.url  %>
-  </div>
+<div class="col-md-3">
+ <%= image_tag image.image_name.url  %>
+</div>
 <% end %>
 <div class="clearfix"> </div>
+<% else %>
 
-<%= link_to 'Edit', edit_profile_path(@profile) %> |
+<%#= link_to 'Edit', edit_profile_path(@profile) %> |
 <%= link_to 'Back', profiles_path %>
+
+<% if current_user.profile.present?  %>
+  <%= link_to 'Edit', edit_profile_path(@profile) %>
+<% else %>
+  <%= link_to 'New', new_profile_path %>
+<% end %>

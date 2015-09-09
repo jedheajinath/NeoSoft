@@ -8,7 +8,7 @@
   </head>
   <body>
     <nav class="navbar" style="background:#D3E5EA">
-      <div class="container-fluid"> 
+      <div class="container-fluid">
         <div class="navbar-header">
           <a class="navbar-brand" href="#">WebSiteName</a>
         </div>
@@ -17,7 +17,7 @@
             <li class="active"><a href="<%= home_path %>">Home</a></li>
             <li><a href="#">Notification</a></li>
             <li><a href="#">Message</a></li>
-            <li><a href="<%= new_profile_path %>">Profile</a></li>
+            <li><a href="<%= profiles_path %>">Profile</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
           	<li><%= link_to "edit profile",edit_user_registration_path %> </li>
@@ -27,11 +27,11 @@
 
       </div>
     </nav>
-    
+
     <div class="container well">
       <div class="row">
 
-        <div class="col-md-2"> 
+        <div class="col-md-2">
           <h3 class="text-primary"> Welcome </h3> <strong class="text-info"> <%= current_user.email %> </strong>
             <div>
               <%= image_tag current_user.image.url if current_user.image.present? %><hr>
@@ -41,7 +41,7 @@
             </div>
         </div>
 
-        <div class="col-md-9"> 
+        <div class="col-md-9">
          <p id="notice">
            <%= notice %>
           </p>

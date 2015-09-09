@@ -4,7 +4,7 @@ class ProfilesController < ApplicationController
 
   # GET /profiles
   def index
-    @profiles = Profile.all
+    @profile = current_user.profile
   end
 
   # GET /profiles/1
@@ -23,9 +23,9 @@ class ProfilesController < ApplicationController
 
   # POST /profiles
   def create
-    @profile = Profile.new(profile_params) 
+    @profile = Profile.new(profile_params)
     respond_to do |format|
-      if @profile.save 
+      if @profile.save
         params[:profile_assets]['image_name'].each do |a|
           @assets = @profile.assets.create!(image_name: a)
         end

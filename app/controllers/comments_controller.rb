@@ -1,9 +1,9 @@
 class CommentsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_comment, only: [:edit, :update, :destroy]
-  
+
   def new
-    if params[:id].present? 
+    if params[:id].present?
       @post = Post.find(params[:id])
       @comment = @post.comments.build
       @comments = @post.comments
@@ -32,11 +32,10 @@ class CommentsController < ApplicationController
   end
 
   private
-
     def set_comment
       @comment = Comment.find(params[:id])
     end
-    
+
     def comment_params
       params.require(:comment).permit(:message, :post_id, :user_id, :parent_id)
     end

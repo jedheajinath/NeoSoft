@@ -1,20 +1,22 @@
 <p id="notice"><%= notice %></p>
-<h3> Profile </h3>
-<table>
+<% if current_user.profile.present? %>
+  <p>
+    <strong>Name:</strong>
+    <%= @profile.name %>
+  </p>
 
-  <tbody>
-    <% @profiles.each do |profile| %>
-      <tr>
-        <td><%= profile.name %></td>
-        <td><%= profile.contact %></td>
+  <p>
+    <strong>Contact:</strong>
+    <%= @profile.contact %>
+  </p>
 
-        <td><%= link_to 'Show', profile %></td>
-        <td><%= link_to 'Edit', edit_profile_path(profile) %></td>
-        <td><%= link_to 'Destroy', profile, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
+  <% @profile.assets.each do |image| %>
+    <div class="col-md-3">
+      <%= image_tag image.image_name.url  %>
+    </div>
+  <% end %>
+  <div class="clearfix"> </div> <br>
+  <%= link_to 'Edit', edit_profile_path(@profile) %>
+<% else %>
+  <%= link_to 'Add new Profile', new_profile_path %>
+<% end %>
